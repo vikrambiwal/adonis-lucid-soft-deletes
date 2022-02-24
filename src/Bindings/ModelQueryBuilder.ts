@@ -14,7 +14,7 @@ import { Exception } from '@poppinss/utils'
 /**
  * Raises exception when model not with soft delete
  */
-function ensureModelWithSoftDeletes(model: LucidModel) {
+function ensureModelWithSoftDeletes (model: LucidModel) {
   if (!('ignoreDeleted' in model && 'ignoreDeletedPaginate' in model)) {
     throw new Exception(`${model.name} model don't support Soft Deletes`, 500, 'E_MODEL_SOFT_DELETE')
   }
@@ -23,7 +23,7 @@ function ensureModelWithSoftDeletes(model: LucidModel) {
 /**
  * Define SoftDeletes binding to ModelQueryBuilder
  */
-export function extendModelQueryBuilder(builder: DatabaseContract['ModelQueryBuilder']) {
+export function extendModelQueryBuilder (builder: DatabaseContract['ModelQueryBuilder']) {
   builder.macro('restore', async function () {
     ensureModelWithSoftDeletes(this.model)
     await this.update({ deleted_at: null })
@@ -37,8 +37,8 @@ export function extendModelQueryBuilder(builder: DatabaseContract['ModelQueryBui
   builder.macro('onlyTrashed', function (trashed: boolean) {
     ensureModelWithSoftDeletes(this.model)
     if (trashed) {
-      return this.model.disableIgnore(this).whereNotNull(`${this.model.table}.deleted_at`);
+      return this.model.disableIgnore(this).whereNotNull(`${this.model.table}.deleted_at`)
     }
-    return this.model.disableIgnore(this).whereNull(`${this.model.table}.deleted_at`);
+    return this.model.disableIgnore(this).whereNull(`${this.model.table}.deleted_at`)
   })
 }
