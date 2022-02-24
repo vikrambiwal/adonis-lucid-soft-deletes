@@ -21,10 +21,10 @@ declare module '@ioc:Adonis/Lucid/Orm' {
 
   interface SoftDeletesMethods<Model extends LucidModel, Result = InstanceType<Model>> {
     withTrashed(): ModelQueryBuilderContract<Model, Result>
-    onlyTrashed(): ModelQueryBuilderContract<Model, Result>
+    onlyTrashed(trashed: boolean): ModelQueryBuilderContract<Model, Result>
     restore(): Promise<void>
   }
 
   interface ModelQueryBuilderContract<Model extends LucidModel, Result = InstanceType<Model>>
-    extends ExcludeTypeMethods<SoftDeletesMethods<Model, Result>, Model> {}
+    extends ExcludeTypeMethods<SoftDeletesMethods<Model, Result>, Model> { }
 }
